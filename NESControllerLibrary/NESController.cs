@@ -15,6 +15,17 @@ public class NESController : NESControllerBase, IDisposable
     private const int DEVICE_VENDOR_ID = 0x0810;
     private const int DEVICE_PRODUCT_ID = 0xE501;
 
+    private static readonly Dictionary<NESControllerButton, Func<byte[], bool>> ButtonActivationRules = new() {
+        {NESControllerButton.Select, (byte[] input) => (input[3] & 16) > 0 },
+        {NESControllerButton.Start, (byte[] input) => (input[3] & 32) > 0 },
+        {NESControllerButton.A, (byte[] input) => (input[2] & 32) > 0 },
+        {NESControllerButton.B, (byte[] input) => (input[2] & 16) > 0 },
+        {NESControllerButton.Up, (byte[] input) => (input[1] & 127) == 0 },
+        {NESControllerButton.Down, (byte[] input) => (input[1] & 128) > 0 },
+        {NESControllerButton.Left, (byte[] input) => (input[0] &127) == 0 },
+        {NESControllerButton.Right, (byte[] input) => (input[0] & 128) > 0 },
+    };
+
     public NESController()
     {
 
@@ -49,16 +60,21 @@ public class NESController : NESControllerBase, IDisposable
             // which are 8 bytes in length
             if (message.Length != 8) { return; }
 
-            uint lastBitArray = BitConverter.ToUInt32(new byte[] { _lastReadData[3], _lastReadData[4], _lastReadData[5], _lastReadData[6] });
-            uint currentBitArray = BitConverter.ToUInt32(new byte[] { message[3], message[4], message[5], message[6] });
+            var lastBitArray = new byte[] { _lastReadData[3], _lastReadData[4], _lastReadData[5], _lastReadData[6] };
+            var currentBitArray = new byte[] { message[3], message[4], message[5], message[6] };
 
 
-            foreach (NESControllerButton button in Enum.GetValues(typeof(NESControllerButton)))
+            foreach (NESControllerButton button in ButtonActivationRules.Keys)
             {
-                var action = GetActionFromBitChange((lastBitArray & (ulong)button) > 0, (currentBitArray & (ulong)button) > 0);
-                Console.WriteLine(
-                    Convert.ToString((long)currentBitArray, 2).PadLeft(32, '0'));
-
+                var action = GetActionFromBitChange(
+                    ButtonActivationRules[button](lastBitArray),
+                    ButtonActivationRules[button](currentBitArray));
+                
+                //Console.WriteLine(Convert.ToString((long)BitConverter.ToUInt32(currentBitArray), 2).PadLeft(32, '0'));
+                //Console.WriteLine($"Previous:{Convert.ToString(lastBitArray[0], 2).PadLeft(8, '0')} {Convert.ToString(lastBitArray[1], 2).PadLeft(8, '0')} {Convert.ToString(lastBitArray[2], 2).PadLeft(8, '0')} {Convert.ToString(lastBitArray[3], 2).PadLeft(8, '0')}");
+                //Console.WriteLine($"Current :{Convert.ToString(currentBitArray[0], 2).PadLeft(8, '0')} {Convert.ToString(currentBitArray[1], 2).PadLeft(8, '0')} {Convert.ToString(currentBitArray[2], 2).PadLeft(8, '0')} {Convert.ToString(currentBitArray[3], 2).PadLeft(8, '0')}");
+                //Console.WriteLine("Action: " + action);
+                //Console.WriteLine();
                 if (action != NESControllerButtonAction.Unchanged)
                 {
                    
