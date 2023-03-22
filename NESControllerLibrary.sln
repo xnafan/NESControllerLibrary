@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NESControllerLibrary", "NESControllerLibrary\NESControllerLibrary.csproj", "{C17FD7F3-9B01-4139-857F-11AB571A74C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NESControllerLibrary", "NESControllerLibrary\NESControllerLibrary.csproj", "{C17FD7F3-9B01-4139-857F-11AB571A74C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTester", "ConsoleTester\ConsoleTester.csproj", "{7C9E652B-8B34-4DE4-A75C-149023B7B0BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTester", "ConsoleTester\ConsoleTester.csproj", "{7C9E652B-8B34-4DE4-A75C-149023B7B0BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NES.ConsoleTester", "NES.ConsoleTester\NES.ConsoleTester.csproj", "{734977E9-A727-470F-B89E-A7092DD0673E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{7C9E652B-8B34-4DE4-A75C-149023B7B0BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C9E652B-8B34-4DE4-A75C-149023B7B0BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C9E652B-8B34-4DE4-A75C-149023B7B0BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{734977E9-A727-470F-B89E-A7092DD0673E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{734977E9-A727-470F-B89E-A7092DD0673E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{734977E9-A727-470F-B89E-A7092DD0673E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{734977E9-A727-470F-B89E-A7092DD0673E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
